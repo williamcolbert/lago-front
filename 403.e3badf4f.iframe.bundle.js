@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunklago_front=self.webpackChunklago_front||[]).push([[403],{"./ditto/fr.json":module=>{module.exports={}}}]);
