@@ -115,7 +115,8 @@ export const CreateWebhookDialog = forwardRef<CreateWebhookDialogRef>((_, ref) =
         if (!isEdit) {
           navigate(
             generatePath(WEBHOOK_LOGS_ROUTE, {
-              webhookId: (res?.data as CreateWebhookEndpointMutation)?.createWebhookEndpoint?.id,
+              webhookId: (res?.data as CreateWebhookEndpointMutation)?.createWebhookEndpoint
+                ?.id as string,
             })
           )
         }
@@ -142,21 +143,14 @@ export const CreateWebhookDialog = forwardRef<CreateWebhookDialogRef>((_, ref) =
       description={translate(
         isEdit ? 'text_64d23a81a7d807f8aa57050b' : 'text_6271200984178801ba8bdee6'
       )}
-      onClickAway={() => {
+      onClose={() => {
         !!mutationError && setMutationError(undefined)
         setLocalWebhook(undefined)
+        formikProps.resetForm()
       }}
       actions={({ closeDialog }) => (
         <>
-          <Button
-            variant="quaternary"
-            onClick={() => {
-              closeDialog()
-              !!mutationError && setMutationError(undefined)
-              setLocalWebhook(undefined)
-              formikProps.resetForm()
-            }}
-          >
+          <Button variant="quaternary" onClick={closeDialog}>
             {translate('text_6271200984178801ba8bdf4a')}
           </Button>
           <Button
@@ -164,6 +158,7 @@ export const CreateWebhookDialog = forwardRef<CreateWebhookDialogRef>((_, ref) =
             disabled={!formikProps.isValid || !formikProps.dirty || !!mutationError}
             onClick={async () => {
               await formikProps.submitForm()
+              closeDialog()
             }}
           >
             {translate(isEdit ? 'text_64d23a81a7d807f8aa57051f' : 'text_6271200984178801ba8bdf5e')}

@@ -284,23 +284,20 @@ export const AddCouponToCustomerDialog = forwardRef<
           getCoupons()
         }
       }}
-      onClickAway={() => {
+      onClose={() => {
         formikProps.resetForm()
       }}
       actions={({ closeDialog }) => (
         <>
-          <Button
-            variant="quaternary"
-            onClick={() => {
-              closeDialog()
-              formikProps.resetForm()
-            }}
-          >
+          <Button variant="quaternary" onClick={closeDialog}>
             {translate('text_628b8c693e464200e00e4693')}
           </Button>
           <Button
             disabled={!formikProps.isValid}
-            onClick={formikProps.submitForm}
+            onClick={async () => {
+              await formikProps.submitForm()
+              closeDialog()
+            }}
             data-test="submit"
           >
             {translate('text_628b8c693e464200e00e46a1')}

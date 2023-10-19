@@ -117,22 +117,14 @@ export const CreateInviteDialog = forwardRef<DialogRef>((_, ref) => {
       onOpen={() => {
         formikProps.validateForm()
       }}
-      onClickAway={() => {
+      onClose={() => {
         setInviteToken('')
         formikProps.resetForm()
         formikProps.validateForm()
       }}
       actions={({ closeDialog }) => (
         <>
-          <Button
-            variant="quaternary"
-            onClick={() => {
-              closeDialog()
-              setInviteToken('')
-              formikProps.resetForm()
-              formikProps.validateForm()
-            }}
-          >
+          <Button variant="quaternary" onClick={closeDialog}>
             {translate('text_63208c711ce25db7814074cd')}
           </Button>
           {!inviteToken ? (
@@ -140,6 +132,7 @@ export const CreateInviteDialog = forwardRef<DialogRef>((_, ref) => {
               disabled={!formikProps.isValid}
               onClick={async () => {
                 await formikProps.submitForm()
+                closeDialog()
               }}
               data-test="submit-invite-button"
             >
